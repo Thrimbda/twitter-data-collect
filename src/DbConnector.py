@@ -2,7 +2,7 @@
 # @Author: Michael
 # @Date:   2016-11-21 22:22:39
 # @Last Modified by:   Macsnow
-# @Last Modified time: 2017-05-07 12:57:25
+# @Last Modified time: 2017-05-14 14:50:03
 from pymongo import MongoClient
 import json
 
@@ -46,10 +46,22 @@ class DbConnector(object):
 
     def addFollowersToDB(self, brandId, followersId):
         for followerId in followersId:
-            self.getCollection('follower').update_one({'_id': followerId}, {'$addToSet': {'follows': brandId}, '$set': {'is_processed': False, 'is_taken': False}}, True)
+            self.getCollection('user').update_one({'_id': followerId}, {'$addToSet': {'follows': brandId}, '$set': {'is_processed': False, 'is_taken': False}}, True)
 
-    def addFriendsToDB(self, followerId, friendsList):
-        self.getCollection('follower').update_one({'_id': followerId}, {'$addToSet': {'follows': {'$each': friendsList}}})
+    def addFriendsToDB(self, userId, friendsList):
+        self.getCollection('user').update_one({'_id': userId}, {'$addToSet': {'follows': {'$each': friendsList}}})
+
+    def addUserProfile(self, userId, profile):
+        self.getCollection('user').update_one({'_id': userId}, {'$addToSet': {'profile': profile}})
+
+    def addUserTweets(self, userId, tweets):
+        self.getCollection('user').update_one({'_id': userId}, {'$addToSet': {'tweets': {'$each': tweets}}})
+
+    def addUserRetweets(self, userId, retweets):
+        self.getCollection('user').update_one({'_id': userId}, {'$addToSet': {'retweets': {'$each': retweets}}})
+
+    def addUserfavorites(self, userId, favorites):
+        self.getCollection('user').update_one({'_id': userId}, {'$addToSet': {'favorites': {'$each': favorites}}})
 
     def updateProcessedFlag(self, userId):
         self.getCollection('follower').update_one({'_id': userId}, {'$set': {'is_taken': False, 'is_processed': True}})

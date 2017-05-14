@@ -2,7 +2,7 @@
 # @Author: Michael
 # @Date:   2016-11-22 20:11:37
 # @Last Modified by:   Macsnow
-# @Last Modified time: 2017-05-07 12:56:52
+# @Last Modified time: 2017-05-14 14:47:47
 from .DbConnector import DbConnector
 from .TwitterProcessor import TwitterProcessor
 from .exceptions import ResoureceNotAvailableException
@@ -73,9 +73,10 @@ def processFriend(twitterProcessor, dbConnector):
 
 
 def processUser(twitterProcessor, dbConnector):
-    user = dbConnector.getFriendToProcess()
+    user = dbConnector.getFollowerToProcess()
     if user:
-        pass
+        profile = twitterProcessor.getFollowers(user['follower_id'])
+        dbConnector.addUserProfile(user['follower_id'], profile)
 
 
 if __name__ == '__main__':

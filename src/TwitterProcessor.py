@@ -2,7 +2,7 @@
 # @Author: Michael
 # @Date:   2016-11-22 19:33:46
 # @Last Modified by:   Macsnow
-# @Last Modified time: 2017-05-07 12:41:19
+# @Last Modified time: 2017-05-14 14:18:05
 from TwitterAPI import TwitterAPI
 from TwitterAPI import TwitterError
 import json
@@ -59,16 +59,18 @@ class TwitterProcessor(object):
                     print('skipping bad request', resource, params)
                     return None
 
-    def getFollowers(self, userId, count):
+    def getFollowers(self, userId, count=5000):
         """
         Gets the followers.
 
         Arguments:
             userId {Id} -- The user identifier
-            count {int: up to 5000} -- The number of followers to return
+
+        Keyword Arguments:
+            count {int: up to 5000} -- The number of user tweets to return (default: {5000})
 
         Returns:
-            list -- The followers.
+            {list} -- The followers.
         """
         followers = []
         request = self.robustRequest('followers/ids',
@@ -77,16 +79,18 @@ class TwitterProcessor(object):
             followers += json.loads(request)['ids']
         return followers
 
-    def getFriends(self, userId, count):
+    def getFriends(self, userId, count=5000):
         """
         Gets the friends.
 
         Arguments:
             userId {Id} -- The user identifier
-            count {int: up to 5000} -- The number of friends to return
+
+        Keyword Arguments:
+            count {int: up to 5000} -- The number of user tweets to return (default: {5000})
 
         Returns:
-            list -- The friends.
+            {list} -- The friends.
         """
         friends = []
         request = self.robustRequest('friends/ids',
@@ -103,7 +107,7 @@ class TwitterProcessor(object):
             userId {Id} -- The user identifier
 
         Returns:
-            dict -- user profile.
+            {dict} -- user profile.
         """
         user = None
         request = self.robustRequest('users/show',
@@ -112,16 +116,58 @@ class TwitterProcessor(object):
             user = json.loads(request)
         return user
 
-    def getUserTimeline(self, userId, count):
+    def getUserTimeline(self, userId, count=200):
         """
         Gets the user timeline.
 
         Arguments:
             userId {Id} -- The user identifier
-            count {int: up to 200} -- The number of user tweets to return
+
+        Keyword Arguments:
+            count {int: up to 200} -- The number of user tweets to return (default: {200})
 
         Returns:
-            [type] -- [description]
+            {list} -- tweets of user
+        """
+        userTimeline = []
+        request = self.robustRequest('statuses/user_timeline',
+                                     {'user_id': userId, 'count': count})
+        if request:
+            userTimeline += json.loads(request)
+        return userTimeline
+
+    def getRetweets(self, userId, count=100):
+        """
+        Gets the user retweets of a user.
+
+        Arguments:
+            userId {Id} -- The user identifier
+
+        Keyword Arguments:
+            count {int: up to 100} -- The number of user tweets to return (default: {100})
+
+        Returns:
+            {list} -- retweets of user
+        """
+        userTimeline = []
+        request = self.robustRequest('statuses/user_timeline',
+                                     {'user_id': userId, 'count': count})
+        if request:
+            userTimeline += json.loads(request)
+        return userTimeline
+
+    def getfavorites(self, userId, count=200):
+        """
+        Gets the user retweets of a user.
+
+        Arguments:
+            userId {Id} -- The user identifier
+
+        Keyword Arguments:
+            count {int: up to 200} -- The number of user tweets to return (default: {200})
+
+        Returns:
+            {list} -- favorites of user
         """
         userTimeline = []
         request = self.robustRequest('statuses/user_timeline',
