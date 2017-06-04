@@ -44,7 +44,7 @@ class DbConnector(object):
     def getUserToProcess(self, processField):
         userDtls = self.getCollection('user').find_one_and_update(filter={processField: {'$exists': False}}, update={'$set': {'is_taken': True}}, upsert=False, sort=None, full_response=False)
         if userDtls:
-            userDtls['friend_id'] = userDtls.pop('_id')
+            userDtls['user_id'] = userDtls.pop('_id')
         return userDtls
 
     def getCredential(self):

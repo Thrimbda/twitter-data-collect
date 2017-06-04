@@ -64,10 +64,10 @@ def processFriend(twitterProcessor, dbConnector):
     """
     follower = dbConnector.getFollowerToProcess()
     if follower:
-        friends = twitterProcessor.getFollowers(follower['follower_id'], 5000)
-        dbConnector.addFriendsToDB(follower['follower_id'], friends)
-        print('added %d friends of %s to DB' % (len(friends), follower['follower_id']))
-        dbConnector.updateProcessedFlag(follower['follower_id'])
+        friends = twitterProcessor.getFollowers(follower['user_id'], 5000)
+        dbConnector.addFriendsToDB(follower['user_id'], friends)
+        print('added %d friends of %s to DB' % (len(friends), follower['user_id']))
+        dbConnector.updateProcessedFlag(follower['user_id'])
     else:
         raise ResoureceNotAvailableException('No more followers to process')
 
@@ -76,9 +76,9 @@ def processFriend(twitterProcessor, dbConnector):
 def processUserProfile(twitterProcessor, dbConnector):
     user = dbConnector.getUserToProcess('profile')
     if user:
-        profile = twitterProcessor.getUser(user['follower_id'])
-        dbConnector.addUserProfile(user['follower_id'], profile)
-        print("added user %s's profile to DB" % (user['follower_id']))
+        profile = twitterProcessor.getUser(user['user_id'])
+        dbConnector.addUserProfile(user['user_id'], profile)
+        print("added user %s's profile to DB" % (user['user_id']))
     else:
         raise ResoureceNotAvailableException('No more followers to process')
 
@@ -88,9 +88,9 @@ def processUserTweets(twitterProcessor, dbConnector):
     user = dbConnector.getUserToProcess('tweets')
     if user:
         for i in range(3200 / 200):
-            tweets = twitterProcessor.getUserTimeline(user['follower_id'], 200)
-            dbConnector.addUserTweets(user['follower_id'], tweets)
-            print("added user %s's %d tweets to DB" % (len(tweets), user['follower_id']))
+            tweets = twitterProcessor.getUserTimeline(user['user_id'], 200)
+            dbConnector.addUserTweets(user['user_id'], tweets)
+            print("added user %s's %d tweets to DB" % (len(tweets), user['user_id']))
     else:
         raise ResoureceNotAvailableException('No more followers to process')
 
@@ -100,9 +100,9 @@ def processUserRetweets(twitterProcessor, dbConnector):
     user = dbConnector.getUserToProcess('retweets')
     if user:
         for i in range(3200 / 200):
-            retweets = twitterProcessor.getUserTimeline(user['follower_id'], 100)
-            dbConnector.addUserRetweets(user['follower_id'], retweets)
-            print("added user %s's %d retweets to DB" % (len(retweets), user['follower_id']))
+            retweets = twitterProcessor.getUserTimeline(user['user_id'], 100)
+            dbConnector.addUserRetweets(user['user_id'], retweets)
+            print("added user %s's %d retweets to DB" % (len(retweets), user['user_id']))
     else:
         raise ResoureceNotAvailableException('No more followers to process')
 
@@ -112,9 +112,9 @@ def processUserFavorites(twitterProcessor, dbConnector):
     user = dbConnector.getUserToProcess('favorites')
     if user:
         for i in range(1000 / 200):
-            favorites = twitterProcessor.getfavorites(user['follower_id'], 200)
-            dbConnector.addUserfavorites(user['follower_id'], favorites)
-            print("added user %s's %d favorites to DB" % (len(favorites), user['follower_id']))
+            favorites = twitterProcessor.getfavorites(user['user_id'], 200)
+            dbConnector.addUserfavorites(user['user_id'], favorites)
+            print("added user %s's %d favorites to DB" % (len(favorites), user['user_id']))
     else:
         raise ResoureceNotAvailableException('No more followers to process')
 
