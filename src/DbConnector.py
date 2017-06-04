@@ -2,7 +2,7 @@
 # @Author: Michael
 # @Date:   2016-11-21 22:22:39
 # @Last Modified by:   Macsnow
-# @Last Modified time: 2017-06-04 16:56:16
+# @Last Modified time: 2017-06-04 17:57:14
 from pymongo import MongoClient
 import json
 
@@ -75,7 +75,7 @@ class DbConnector(object):
     @classmethod
     def initDB(self, forceInit=False):
         self.con = MongoClient('localhost', 27017)
-        self.db = self.con.twitter_demographics
+        self.db = self.con.twitter_action
         if not self.db['brands'].find_one() or forceInit:
             with open('../data/brands.json', 'r') as f:
                 for line in f.readlines():
