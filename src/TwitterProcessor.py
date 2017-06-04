@@ -2,7 +2,7 @@
 # @Author: Michael
 # @Date:   2016-11-22 19:33:46
 # @Last Modified by:   Macsnow
-# @Last Modified time: 2017-05-14 14:18:05
+# @Last Modified time: 2017-06-04 17:10:51
 from TwitterAPI import TwitterAPI
 from TwitterAPI import TwitterError
 import json
@@ -150,7 +150,7 @@ class TwitterProcessor(object):
             {list} -- retweets of user
         """
         userTimeline = []
-        request = self.robustRequest('statuses/user_timeline',
+        request = self.robustRequest('statuses/retweets_of_me',
                                      {'user_id': userId, 'count': count})
         if request:
             userTimeline += json.loads(request)
@@ -170,7 +170,7 @@ class TwitterProcessor(object):
             {list} -- favorites of user
         """
         userTimeline = []
-        request = self.robustRequest('statuses/user_timeline',
+        request = self.robustRequest('favorites/list',
                                      {'user_id': userId, 'count': count})
         if request:
             userTimeline += json.loads(request)
