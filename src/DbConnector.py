@@ -2,7 +2,7 @@
 # @Author: Michael
 # @Date:   2016-11-21 22:22:39
 # @Last Modified by:   Macsnow
-# @Last Modified time: 2017-05-14 14:50:03
+# @Last Modified time: 2017-06-04 16:56:16
 from pymongo import MongoClient
 import json
 
@@ -37,6 +37,12 @@ class DbConnector(object):
 
     def getFriendToProcess(self):
         firendDtls = self.getCollection('friend').find_one_and_update(filter={'is_processed': False, 'is_taken': False}, update={'$set': {'is_taken': True}}, upsert=False, sort=None, full_response=False)
+        if firendDtls:
+            firendDtls['friend_id'] = firendDtls.pop('_id')
+        return firendDtls
+
+    def getUserToProcess(self, processField):
+        firendDtls = self.getCollection('friend').find_one_and_update(filter={processField: {'$exists': False}}, update={'$set': {'is_taken': True}}, upsert=False, sort=None, full_response=False)
         if firendDtls:
             firendDtls['friend_id'] = firendDtls.pop('_id')
         return firendDtls
