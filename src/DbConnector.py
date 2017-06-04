@@ -2,7 +2,7 @@
 # @Author: Michael
 # @Date:   2016-11-21 22:22:39
 # @Last Modified by:   Macsnow
-# @Last Modified time: 2017-06-04 17:57:14
+# @Last Modified time: 2017-06-04 18:04:00
 from pymongo import MongoClient
 import json
 
@@ -76,10 +76,10 @@ class DbConnector(object):
     def initDB(self, forceInit=False):
         self.con = MongoClient('localhost', 27017)
         self.db = self.con.twitter_action
-        if not self.db['brands'].find_one() or forceInit:
-            with open('../data/brands.json', 'r') as f:
-                for line in f.readlines():
-                    self.db['brands'].insert_one(eval(line))
+        if not forceInit:
+            # with open('../data/brands.json', 'r') as f:
+            #     for line in f.readlines():
+            #         self.db['brands'].insert_one(eval(line))
 
             with open('../data/twitter-cred.json', 'r') as f:
                 for line in f.readlines():
