@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 # @Author: Michael
 # @Date:   2016-11-21 22:22:39
-# @Last Modified by:   Macsnow
-# @Last Modified time: 2017-06-04 18:14:50
+# @Last Modified by:   64509
+# @Last Modified time: 2017-06-25 03:09:30
 from pymongo import MongoClient
-import json
 
 
 class DbConnector(object):

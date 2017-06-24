@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: Michael
 # @Date:   2016-11-22 19:33:46
-# @Last Modified by:   Macsnow
-# @Last Modified time: 2017-06-04 17:10:51
+# @Last Modified by:   64509
+# @Last Modified time: 2017-06-25 03:10:16
 from TwitterAPI import TwitterAPI
 from TwitterAPI import TwitterError
 import json
@@ -48,9 +48,9 @@ class TwitterProcessor(object):
             else:
                 print('this is No.%d times try.' % (i + 1))
                 error = json.loads(request.text)
-                # print(error, error['errors'][0]['code'] == 88, 'code' in error)
                 if 'code' in repr(error) and error['errors'][0]['code'] == 88:
-                    print('Got error:', error['errors'][0]['message'], '\nsleeping for 15 minutes.')
+                    print('Got error:', error['errors'][0]['message'],
+                          '\nsleeping for 15 minutes.')
                     print('time:', time.asctime(time.localtime(time.time())))
                     time.sleep(60 * 15)
                     continue
@@ -67,7 +67,8 @@ class TwitterProcessor(object):
             userId {Id} -- The user identifier
 
         Keyword Arguments:
-            count {int: up to 5000} -- The number of user tweets to return (default: {5000})
+            count {int: up to 5000} --
+                The number of user tweets to return (default: {5000})
 
         Returns:
             {list} -- The followers.
@@ -87,7 +88,8 @@ class TwitterProcessor(object):
             userId {Id} -- The user identifier
 
         Keyword Arguments:
-            count {int: up to 5000} -- The number of user tweets to return (default: {5000})
+            count {int: up to 5000} --
+                The number of user tweets to return (default: {5000})
 
         Returns:
             {list} -- The friends.
@@ -124,7 +126,8 @@ class TwitterProcessor(object):
             userId {Id} -- The user identifier
 
         Keyword Arguments:
-            count {int: up to 200} -- The number of user tweets to return (default: {200})
+            count {int: up to 200} --
+                The number of user tweets to return (default: {200})
 
         Returns:
             {list} -- tweets of user
@@ -144,7 +147,8 @@ class TwitterProcessor(object):
             userId {Id} -- The user identifier
 
         Keyword Arguments:
-            count {int: up to 100} -- The number of user tweets to return (default: {100})
+            count {int: up to 100} --
+                The number of user tweets to return (default: {100})
 
         Returns:
             {list} -- retweets of user
@@ -164,7 +168,8 @@ class TwitterProcessor(object):
             userId {Id} -- The user identifier
 
         Keyword Arguments:
-            count {int: up to 200} -- The number of user tweets to return (default: {200})
+            count {int: up to 200} --
+                The number of user tweets to return (default: {200})
 
         Returns:
             {list} -- favorites of user
